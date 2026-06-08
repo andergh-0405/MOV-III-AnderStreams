@@ -1,0 +1,297 @@
+[
+    {
+        "id": "mov_01",
+        "title": "Nomadland",
+        "type": "movie",
+        "synopsis": "En tiempos de la Gran Recesión, Fern, una mujer del poblado de Empire (Nevada, Estados Unidos), pierde su empleo en el 2011 tras el cierre de la fábrica de materiales de construcción donde trabajó junto con su esposo, quien recientemente falleció. Con sesenta años y sin otra alternativa, decide vender la mayoría de sus pertenencias y comprar una furgoneta para vivir y viajar por el país en busca de trabajo, como nómada de hoy en día.",
+        "director": "Chloé Zhao",
+        "actors": [
+            "Frances McDormand",
+            "David Strathairn"
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2020-12-04",
+        "age_rating": "13",
+        "rating": 8.1,
+        "duration_mins": 107,
+        "thumbnail": "https://media.themoviedb.org/t/p/w600_and_h900_face/6CFE3b0iHmv3m2cRrmBXHIP2vhv.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/563sRDK3rZS31TXCdTY4lfcwrNK.jpg",
+        "video_url": "https://cdn.app.com/vid/nomadland.mp4",
+        "trailer_url": "https://youtu.be/f_kPuDuj8mY?si=Hwyugn9Orf-K5CjG",
+        "genres": [
+            "Drama"
+        ]
+    },
+    {
+        "id": "mov_02",
+        "title": "Dune",
+        "type": "movie",
+        "synopsis": "El joven Paul Atreides debe viajar al planeta más peligroso del universo para asegurar el futuro de su familia.",
+        "director": "Denis Villeneuve",
+        "actors": [
+            "Timothée Chalamet",
+            "Zendaya",
+            "Oscar Isaac"
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2021-10-22",
+        "age_rating": "13",
+        "rating": 8.0,
+        "duration_mins": 155,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/hIEKzq0klqtz1H3S7QxzH4mMbvT.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/h61Kc0NC7d90jNwXfBx5js7DnSQ.jpg",
+        "video_url": "https://cdn.app.com/vid/dune.mp4",
+        "trailer_url": "https://youtu.be/mSY_NbSmaUI?si=8ePQ9OZYe68_-rca",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ]
+    },
+    {
+        "id": "mov_03",
+        "title": "Everything Everywhere All at Once",
+        "type": "movie",
+        "synopsis": "Una mujer debe conectar con versiones alternativas de sí misma para salvar el multiverso.",
+        "director": "Daniel Kwan, Daniel Scheinert",
+        "actors": [
+            "Michelle Yeoh",
+            "Ke Huy Quan",
+            "Stephanie Hsu"
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2022-03-11",
+        "age_rating": "16",
+        "rating": 8.1,
+        "duration_mins": 139,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/9R1zEZJkIah6GuLwFZWsuygn552.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/tt79dbOPd9Z9ykEOpvckttgYXwH.jpg",
+        "video_url": "https://cdn.app.com/vid/eeaao.mp4",
+        "trailer_url": "https://youtu.be/wxN1T1uxQ2g?si=sIhhOs1iqN-96E2d",
+        "genres": [
+            "Sci-Fi",
+            "Comedy",
+            "Drama"
+        ]
+    },
+    {
+        "id": "mov_04",
+        "title": "Oppenheimer",
+        "type": "movie",
+        "synopsis": "La historia de J. Robert Oppenheimer y la creación de la bomba atómica.",
+        "director": "Christopher Nolan",
+        "actors": [
+            "Cillian Murphy",
+            "Emily Blunt",
+            "Robert Downey Jr."
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2023-07-21",
+        "age_rating": "16",
+        "rating": 8.4,
+        "duration_mins": 180,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/ncKCQVXgk4BcQV6XbvesgZ2zLvZ.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1000_and_h563_face/xcXALwBjdHIjrESpGVhghqj8fGT.jpg",
+        "video_url": "https://cdn.app.com/vid/oppenheimer.mp4",
+        "trailer_url": "https://youtu.be/JpUd4BS7yI0?si=21nSGKeSxJzqnPse",
+        "genres": [
+            "Drama",
+            "History"
+        ]
+    },
+    {
+        "id": "mov_05",
+        "title": "Poor Things",
+        "type": "movie",
+        "synopsis": "Una joven revive gracias a un científico y explora el mundo con una nueva perspectiva.",
+        "director": "Yorgos Lanthimos",
+        "actors": [
+            "Emma Stone",
+            "Mark Ruffalo",
+            "Willem Dafoe"
+        ],
+        "country": "Irlanda",
+        "release_date": "2023-12-08",
+        "age_rating": "16",
+        "rating": 8.2,
+        "duration_mins": 141,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/gNTWQuQCAjwOPwdxc3hDoVZfv5n.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/h0oBqUpax591vOacpBsDJ8cynjk.jpg",
+        "video_url": "https://cdn.app.com/vid/poorthings.mp4",
+        "trailer_url": "https://youtu.be/btzmfR11MV4?si=6xnFdEzOSJExHy_M",
+        "genres": [
+            "Drama",
+            "Fantasy"
+        ]
+    },
+    {
+        "id": "mov_06",
+        "title": "La Sociedad de la Nieve",
+        "type": "movie",
+        "synopsis": "La historia real del accidente aéreo en los Andes y la supervivencia de sus pasajeros.",
+        "director": "J.A. Bayona",
+        "actors": [
+            "Enzo Vogrincic",
+            "Agustín Pardella"
+        ],
+        "country": "España",
+        "release_date": "2024-01-04",
+        "age_rating": "16",
+        "rating": 8.0,
+        "duration_mins": 144,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/9tkJPQb4X4VoU3S5nqLDohZijPj.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1000_and_h563_face/mAtT3OY9mbdUkz4erat15PO9ApY.jpg",
+        "video_url": "https://cdn.app.com/vid/sociedad.mp4",
+        "trailer_url": "https://youtu.be/XKM6LZGZVtI?si=TzjDkjHSwl_YYt8y",
+        "genres": [
+            "Drama",
+            "Survival"
+        ]
+    },
+    {
+        "id": "mov_07",
+        "title": "Anora",
+        "type": "movie",
+        "synopsis": "Una joven bailarina se ve envuelta en un romance inesperado con un heredero ruso.",
+        "director": "Sean Baker",
+        "actors": [
+            "Mikey Madison",
+            "Mark Eydelshtein"
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2024-05-24",
+        "age_rating": "16",
+        "rating": 8.5,
+        "duration_mins": 139,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/tZCrWnyN4zEtJiFem5TFoYT8nxI.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/87GU2ifjNYtgYtcRH1NNH1P4ODo.jpg",
+        "video_url": "https://cdn.app.com/vid/anora.mp4",
+        "trailer_url": "https://youtu.be/xV7jnVhBD2E?si=RZqFlZQxgOImf1VF",
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
+    },
+    {
+        "id": "mov_08",
+        "title": "Hamnet",
+        "type": "movie",
+        "synopsis": "La historia de Agnes y William Shakespeare, marcada por la pérdida de su hijo Hamnet.",
+        "director": "Chloé Zhao",
+        "actors": [
+            "Paul Mescal",
+            "Jessie Buckley"
+        ],
+        "country": "Reino Unido",
+        "release_date": "2026-04-10",
+        "age_rating": "13",
+        "rating": 8.3,
+        "duration_mins": 125,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/qXF968t2LfHZJ8Zrq2NgMGNomnE.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/uRDu9DiTVf97z5sj6qesmyQpYji.jpg",
+        "video_url": "https://cdn.app.com/vid/hamnet.mp4",
+        "trailer_url": "https://youtu.be/k3DhnEZpD08?si=tG64VAN--dap4TVo",
+        "genres": [
+            "Drama",
+            "History"
+        ]
+    },
+    {
+        "id": "mov_09",
+        "title": "Another Round",
+        "type": "movie",
+        "synopsis": "Cuatro profesores deciden probar una teoría: mantener un nivel constante de alcohol en sangre para mejorar sus vidas.",
+        "director": "Thomas Vinterberg",
+        "actors": [
+            "Mads Mikkelsen",
+            "Thomas Bo Larsen"
+        ],
+        "country": "Dinamarca",
+        "release_date": "2020-09-24",
+        "age_rating": "16",
+        "rating": 7.7,
+        "duration_mins": 117,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/kqkpGdZsNpKv5x5jWGtCyONrr43.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1000_and_h563_face/jpVmR4qLWX37GIbVlrH9NnRloWC.jpg",
+        "video_url": "https://cdn.app.com/vid/anotherround.mp4",
+        "trailer_url": "https://youtu.be/PbMZ6KprSI4?si=ff8L-S59fIMIZXxh",
+        "genres": [
+            "Drama",
+            "Comedy"
+        ]
+    },
+    {
+        "id": "mov_10",
+        "title": "The Power of the Dog",
+        "type": "movie",
+        "synopsis": "Un ranchero carismático pero cruel enfrenta un cambio inesperado cuando su hermano se casa.",
+        "director": "Jane Campion",
+        "actors": [
+            "Benedict Cumberbatch",
+            "Kirsten Dunst",
+            "Jesse Plemons"
+        ],
+        "country": "Nueva Zelanda",
+        "release_date": "2021-11-17",
+        "age_rating": "16",
+        "rating": 7.8,
+        "duration_mins": 126,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/1l9aOf6vL01NAiljwDczv3YlwHN.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/9ME2lhP4eXIzcIRKQBVHuhbzdZw.jpg",
+        "video_url": "https://cdn.app.com/vid/powerdog.mp4",
+        "trailer_url": "https://youtu.be/wzTkWBGDeJY?si=OlDprTR_nLoEsGZz",
+        "genres": [
+            "Drama",
+            "Western"
+        ]
+    },
+    {
+        "id": "mov_11",
+        "title": "Top Gun: Maverick",
+        "type": "movie",
+        "synopsis": "El legendario piloto Maverick regresa para entrenar a una nueva generación de aviadores.",
+        "director": "Joseph Kosinski",
+        "actors": [
+            "Tom Cruise",
+            "Miles Teller",
+            "Jennifer Connelly"
+        ],
+        "country": "Estados Unidos",
+        "release_date": "2022-05-27",
+        "age_rating": "13",
+        "rating": 8.3,
+        "duration_mins": 130,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/bA1XVOT1UHszYrWmCDkq3yN1ROy.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/AaV1YIdWKnjAIAOe8UUKBFm327v.jpg",
+        "video_url": "https://cdn.app.com/vid/topgun.mp4",
+        "trailer_url": "https://youtu.be/zmFdhZ6gyUM?si=YzP4SBBy47COlsx9",
+        "genres": [
+            "Action",
+            "Drama"
+        ]
+    },
+    {
+        "id": "mov_12",
+        "title": "Parasite",
+        "type": "movie",
+        "synopsis": "Una familia pobre se infiltra en la vida de una familia rica, con consecuencias inesperadas.",
+        "director": "Bong Joon-ho",
+        "actors": [
+            "Song Kang-ho",
+            "Cho Yeo-jeong",
+            "Choi Woo-shik"
+        ],
+        "country": "Corea del Sur",
+        "release_date": "2020-02-07",
+        "age_rating": "16",
+        "rating": 8.6,
+        "duration_mins": 132,
+        "thumbnail": "https://media.themoviedb.org/t/p/w440_and_h660_face/4N55tgxDW0RRATyrZHbx0q9HUKv.jpg",
+        "thumbnail_horinzontal":"https://media.themoviedb.org/t/p/w1066_and_h600_face/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg",
+        "video_url": "https://cdn.app.com/vid/parasite.mp4",
+        "trailer_url": "https://youtu.be/mwoy1GqLIP4?si=rxtxEHGfuHEKMdtg",
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
+    }
+]
