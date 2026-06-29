@@ -1,43 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:movies_taller/screens/movies.dart';
-import 'package:movies_taller/screens/register.dart';
+import 'package:movies_taller/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Cuerpo(),
-    );
-  }
-}
-
-class Cuerpo extends StatelessWidget {
-  const Cuerpo({super.key});
+  final cambiarTema;
+  const Login({this.cambiarTema ,super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(actions: [
+        IconButton(onPressed: ()=>cambiarTema(), icon: Icon(Icons.brightness_medium))
+      ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, 
           children: [
-            Flexible(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0), 
-                child: Image.network(
-                  "https://media.istockphoto.com/id/1944783914/es/vector/pel%C3%ADcula-de-cine.jpg?s=612x612&w=0&k=20&c=JikdXkmQlGBwhC0Fqfs7MbxRLhdNglMp0Ub3MtRpobQ=",
-                  height: 180, 
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          
             const Text(
               "Iniciar sesión",
               style: TextStyle(
@@ -47,15 +28,8 @@ class Cuerpo extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            usuario(),
-            SizedBox(height: 20),
-            password(),
-            SizedBox(height: 5), 
-            TextButton(onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder:(context) =>Register())), child:Text("¿No tienes una cuenta? Haz click para crear")),
-            SizedBox(height: 10), 
-            btnIniciar(),
-            SizedBox(height: 10), 
-            ElevatedButton(onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder:(context) => Movies(),)), child:Text("Ver peliculas"))
+            formulario(context),
+            ElevatedButton(onPressed: ()=>Navigator.pushNamed(context, "/movies"), child: Text("Iniciar sesión"),)
           ],
         ),
       ),
@@ -63,10 +37,13 @@ class Cuerpo extends StatelessWidget {
   }
 }
 
+TextEditingController usuarioC = TextEditingController();
+TextEditingController contrasenia = TextEditingController();
+
 Widget usuario() {
   return TextField(
+     controller: usuarioC,
     style: const TextStyle(fontSize: 18, color: Colors.white),
-    keyboardType: TextInputType.text,
     decoration: InputDecoration(
       filled: true,
      fillColor: Colors.grey[800],
@@ -88,8 +65,8 @@ Widget usuario() {
 Widget password() {
   return TextField(
     obscureText: true,
+    controller: contrasenia,
     style: const TextStyle(fontSize: 18, color: Colors.white),
-    keyboardType: TextInputType.text,
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.grey[800],
@@ -108,12 +85,12 @@ Widget password() {
   );
 }
 
-Widget btnIniciar() {
+Widget btnIniciar(context) {
   return SizedBox(
     width: double.infinity, 
     height: 55, 
     child: FilledButton.icon(
-      onPressed: () {}, 
+      onPressed: ()=>login(context, usuarioC, contrasenia), 
       style: FilledButton.styleFrom(
         backgroundColor: Colors.red[700], 
         shape: RoundedRectangleBorder(
@@ -131,4 +108,37 @@ Widget btnIniciar() {
       icon: const Icon(Icons.account_box, size: 30, color: Colors.white),
     ),
   );
+}
+
+Widget formulario(context) {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      usuario(),
+      SizedBox(height: 20),
+      password(),
+      SizedBox(height: 20),
+      btnIniciar(context),
+      SizedBox(height: 20),
+      TextButton(onPressed: ()=>Navigator.pushNamed(context, "/register"), child:Text("¿No tienes una cuenta? Haz click para crear")),
+
+    ],
+  );
+}
+
+
+
+Future<void> login(context, correo, contrasenia) async {
+  try {
+    final AuthResponse res = await supabase.auth.signInWithPassword(
+      email: correo.text,
+      password: contrasenia.text,
+    );
+    final Session? session = res.session;
+    final User? user = res.user;
+
+    Navigator.pushNamed(context, "/movies");
+  } catch (e) {
+    print("e.toString()");
+  }
 }

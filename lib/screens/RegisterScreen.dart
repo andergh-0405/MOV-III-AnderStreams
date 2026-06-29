@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:movies_taller/screens/login.dart';
+import 'package:movies_taller/main.dart';
+
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:Cuerpo2(),
-    );
-  }
-}
-
-class Cuerpo2 extends StatelessWidget {
-  const Cuerpo2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
-      body: SingleChildScrollView( 
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+             Text(
                 "Crear cuenta",
                 style: TextStyle(
                   fontSize: 32,
@@ -35,34 +22,41 @@ class Cuerpo2 extends StatelessWidget {
                   letterSpacing: 1.2,
                 ),
               ),
-              SizedBox(height: 40), 
-              
-              nik(),
-               SizedBox(height: 20), 
-              
-              correo(),
-              SizedBox(height: 20),
-              
-              edad(context),
-              SizedBox(height: 20),
-              
-              password(),
-              SizedBox(height: 15), 
-              TextButton(onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder:(context) =>Login())), child:Text("¿No tienes una cuenta? Haz click para crear")),
-              btnRegistrar(),
-              SizedBox(height: 20),
-            ],
-          ),
+              SizedBox(height: 40),
+            formulario(context),
+          ],
         ),
       ),
     );
   }
 }
 
+TextEditingController correoController = TextEditingController();
+TextEditingController contraseniaController = TextEditingController();
+TextEditingController nickController = TextEditingController();
+TextEditingController edadController = TextEditingController();
+
+Widget formulario(context) {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      nik(),
+      SizedBox(height: 20),
+      correo(),
+      SizedBox(height: 20),
+      edad(context),
+      SizedBox(height: 20),
+      password(),
+      SizedBox(height: 20),
+      btnRegistrar(context, correoController, contraseniaController)
+    ],
+  );
+}
+
 Widget nik() {
   return TextField(
+    controller: nickController,
     style: const TextStyle(fontSize: 18, color: Colors.white),
-    keyboardType: TextInputType.text,
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.grey[850],
@@ -83,8 +77,8 @@ Widget nik() {
 
 Widget correo() {
   return TextField(
+    controller: correoController,
     style: const TextStyle(fontSize: 18, color: Colors.white),
-    keyboardType: TextInputType.emailAddress, // Muestra el teclado con el "@"
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.grey[850],
@@ -102,44 +96,47 @@ Widget correo() {
     ),
   );
 }
-TextEditingController anioController = TextEditingController();
+
 Widget edad(BuildContext context) {
   return TextField(
-    controller: anioController, 
-    readOnly: true, 
+    controller: edadController,
+    readOnly: true,
     onTap: () async {
       DateTime? fechaSeleccionada = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(), 
-        firstDate: DateTime(1900),   
-        lastDate: DateTime.now(),    
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now(),
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
               colorScheme: const ColorScheme.dark(
-                primary: Colors.red, 
-                onPrimary: Colors.white, 
-                surface: Color(0xFF2B2B2B), 
-                onSurface: Colors.white, 
+                primary: Colors.red,
+                onPrimary: Colors.white,
+                surface: Color(0xFF2B2B2B),
+                onSurface: Colors.white,
               ),
             ),
             child: child!,
           );
         },
       );
-     if (fechaSeleccionada != null) {
+      if (fechaSeleccionada != null) {
         String dia = fechaSeleccionada.day.toString().padLeft(2, '0');
         String mes = fechaSeleccionada.month.toString().padLeft(2, '0');
         String anio = fechaSeleccionada.year.toString();
 
-        anioController.text = "$dia/$mes/$anio";
+        edadController.text = "$dia/$mes/$anio";
       }
     },
     style: const TextStyle(fontSize: 18, color: Colors.white),
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.grey[800],
-      prefixIcon: const Icon(Icons.calendar_today_outlined, color: Colors.white),
+      prefixIcon: const Icon(
+        Icons.calendar_today_outlined,
+        color: Colors.white,
+      ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide.none,
@@ -148,8 +145,7 @@ Widget edad(BuildContext context) {
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: Colors.white, width: 2),
       ),
-      // Actualizamos el texto para reflejar lo que se va a mostrar
-      labelText: "Año de nacimiento", 
+      labelText: "Año de nacimiento",
       labelStyle: const TextStyle(color: Colors.white, fontSize: 15),
     ),
   );
@@ -157,9 +153,9 @@ Widget edad(BuildContext context) {
 
 Widget password() {
   return TextField(
-    obscureText: true, // Oculta los caracteres
+    controller: contraseniaController,
+    obscureText: true,
     style: const TextStyle(fontSize: 18, color: Colors.white),
-    keyboardType: TextInputType.text,
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.grey[850],
@@ -172,30 +168,27 @@ Widget password() {
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: Colors.red, width: 2),
       ),
-      labelText: "Cree una contraseña",
+      labelText: "Crear una contraseña",
       labelStyle: const TextStyle(color: Colors.white54),
     ),
   );
 }
 
-Widget btnRegistrar() {
+Widget btnRegistrar(context, correo, contrasenia) {
   return SizedBox(
     width: double.infinity,
     height: 55,
     child: FilledButton.icon(
-      onPressed: () {
-        // Aquí irá la lógica para guardar el usuario
-      },
+      onPressed: () =>
+          registro(context, correo, contrasenia),
       style: FilledButton.styleFrom(
         backgroundColor: Colors.red[700],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       label: const Text(
         "Registrarse",
         style: TextStyle(
-          fontSize: 20, 
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
@@ -203,4 +196,14 @@ Widget btnRegistrar() {
       icon: const Icon(Icons.person_add_alt_1, size: 28, color: Colors.white),
     ),
   );
+}
+
+Future<void> registro(context, correo, contrasenia) async {
+  final AuthResponse res = await supabase.auth.signUp(
+    email: correo.text,
+    password: contrasenia.text,
+  );
+  Navigator.pushNamed(context, "/login");
+  final Session? session = res.session;
+  final User? user = res.user;
 }
