@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:movies_taller/main.dart';
+import 'package:movies_taller/screens/PerfilScreen.dart';
 
 class Movies extends StatefulWidget {
   final cambiarTema;
@@ -78,11 +80,7 @@ class _MoviesState extends State<Movies> {
           icon: const Icon(Icons.bedtime_rounded),
         ),
         actions: [
-          IconButton(
-            onPressed: () => perfil(context),
-            icon: const Icon(Icons.account_box),
-            iconSize: 40,
-          ),
+          fotoUsuario(context)
         ],
       ),
       body: cargando
@@ -136,7 +134,6 @@ class _MoviesState extends State<Movies> {
                           selectedColor: Colors.red,
                           backgroundColor: colorScheme.surfaceContainerHighest,
                           labelStyle: TextStyle(
-                            
                             color: esSeleccionado
                                 ? Colors.white
                                 : colorScheme.onSurface,
@@ -165,7 +162,7 @@ class _MoviesState extends State<Movies> {
                     top: 10.0,
                   ),
                   child: Text(
-                    "Resultados",
+                    "Peliculas",
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: colorScheme.onSurface.withOpacity(0.6),
                     ),
@@ -320,55 +317,6 @@ class _MoviesState extends State<Movies> {
             ),
     );
   }
-}
-
-void perfil(BuildContext context) {
-  final colorScheme = Theme.of(context).colorScheme;
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text("Perfil"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CircleAvatar(
-            radius: 36,
-            backgroundColor: Colors.red.withOpacity(0.15),
-            child: const Text(
-              "U",
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "Usuario",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            "usuario@email.com",
-            style: TextStyle(
-              fontSize: 13,
-              color: colorScheme.onSurface.withOpacity(0.6),
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Cerrar"),
-        ),
-      ],
-    ),
-  );
 }
 
 class DetallePelicula extends StatelessWidget {
@@ -544,3 +492,42 @@ class DetallePelicula extends StatelessWidget {
     );
   }
 }
+
+Widget fotoUsuario(BuildContext context) {
+  return FutureBuilder(
+    future: supabase
+        .from('usuarios')
+        .select('foto')
+        .eq('auth_id', supabase.auth.currentUser!.id)
+        .maybeSingle(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) {
+        return const CircleAvatar(
+          radius: 20,
+          child: Icon(Icons.person),
+        );
+      }
+
+      final data = snapshot.data;
+      final fotoUrl = data?['foto'] ?? '';
+
+      return IconButton(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Perfil"),
+            content: Perfilscreen(),
+          ),
+        ),
+        icon: CircleAvatar(
+          radius: 20,
+          backgroundImage: fotoUrl.isNotEmpty ? NetworkImage(fotoUrl) : null,
+          child: fotoUrl.isEmpty
+              ? const Icon(Icons.person, color: Colors.white)
+              : null,
+        ),
+      );
+    },
+  );
+}
+

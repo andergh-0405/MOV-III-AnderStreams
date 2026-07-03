@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_taller/screens/LoginScreen.dart';
 import 'package:movies_taller/screens/MoviesScreen.dart';
 import 'package:movies_taller/screens/RegisterScreen.dart';
+import 'package:movies_taller/screens/UsuarioScreen.dart';
 import 'package:movies_taller/screens/welcomeScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,7 +24,7 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   
-   bool modoOscuro=false;
+   bool modoOscuro=true;
 
     void cambiarTema(){
       setState(() {
@@ -37,12 +38,13 @@ class _MainAppState extends State<MainApp> {
     return  MaterialApp(
     debugShowCheckedModeBanner: false,
      theme: modoOscuro ? ThemeData.dark(): ThemeData.light(),
-     initialRoute: "/movies",
+     initialRoute: "/",
      routes: {
       "/": (context) => Welcomescreen(),
       "/login": (context) =>Login(cambiarTema: cambiarTema),
       "/register": (context)=> Register(),
       "/movies": (context)=> Movies(cambiarTema: cambiarTema),
+      "/datosUsuario": (context)=> Usuarioscreen(cambiarTema: cambiarTema),
      },
     );
   }

@@ -129,6 +129,13 @@ Widget formulario(context) {
 
 
 Future<void> login(context, correo, contrasenia) async {
+  if (correo.text.isEmpty || contrasenia.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Por favor ingrese sus credenciales")),
+    );
+    return;
+  }
+
   try {
     final AuthResponse res = await supabase.auth.signInWithPassword(
       email: correo.text,
@@ -137,8 +144,25 @@ Future<void> login(context, correo, contrasenia) async {
     final Session? session = res.session;
     final User? user = res.user;
 
-    Navigator.pushNamed(context, "/movies");
+    if (user != null) {
+      // Verificar si ya tiene datos en la tabla usuarios
+      final response = await supabase
+          .from('usuarios')
+          .select()
+          .eq('auth_id', user.id)   // 👈 usamos el UID de Auth
+          .maybeSingle();
+
+      if (response == null) {
+        // No tiene datos → mostrar formulario
+        Navigator.pushReplacementNamed(context, "/datosUsuario");
+      } else {
+        // Ya tiene datos → ir directo a movies
+        Navigator.pushReplacementNamed(context, "/movies");
+      }
+    }
   } catch (e) {
-    print("e.toString()");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error al iniciar sesión: $e")),
+    );
   }
 }
