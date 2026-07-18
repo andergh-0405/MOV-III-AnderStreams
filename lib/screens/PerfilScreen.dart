@@ -20,135 +20,7 @@ class _PerfilscreenState extends State<Perfilscreen> {
   bool _cargando = true; 
   bool _actualizando = false; 
 
-  // Variable para guardar la imagen seleccionada localmente
   XFile? imagenSeleccionada;
-
-  @override
-  void initState() {
-    super.initState();
-    nombre = TextEditingController();
-    nick = TextEditingController();
-    edad = TextEditingController();
-    foto = TextEditingController();
-    cargarDatos();
-  }
-
-  @override
-  void dispose() {
-    nombre.dispose();
-    nick.dispose();
-    edad.dispose();
-    foto.dispose();
-    super.dispose();
-  }
-
-  Future<void> cargarDatos() async {
-    final user = supabase.auth.currentUser;
-    if (user == null) return;
-
-    try {
-      final response = await supabase
-          .from('usuarios')
-          .select()
-          .eq('auth_id', user.id)
-          .single();
-
-      if (mounted) {
-        setState(() {
-          nombre.text = response['nombre'] ?? '';
-          nick.text = response['nick'] ?? '';
-          edad.text = response['edad'] ?? '';
-          foto.text = response['foto'] ?? '';
-          _cargando = false; 
-        });
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _cargando = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error al cargar perfil: $e"), backgroundColor: Colors.red),
-        );
-      }
-    }
-  }
-
-  // Métodos para seleccionar la imagen
-  Future<void> seleccionarImagenGaleria() async {
-    final picker = ImagePicker();
-    final imagen = await picker.pickImage(source: ImageSource.gallery);
-    if (imagen != null) {
-      setState(() => imagenSeleccionada = imagen);
-    }
-  }
-
-  Future<void> tomarFoto() async {
-    final picker = ImagePicker();
-    final imagen = await picker.pickImage(source: ImageSource.camera);
-    if (imagen != null) {
-      setState(() => imagenSeleccionada = imagen);
-    }
-  }
-
-  Future<void> actualizarDatos() async {
-    final user = supabase.auth.currentUser;
-    if (user == null) return;
-
-    setState(() => _actualizando = true);
-
-    try {
-      // 1. Verificar si hay una imagen nueva seleccionada
-      if (imagenSeleccionada != null) {
-        final file = File(imagenSeleccionada!.path);
-        final path = "fotos/${user.id}.png";
-        
-        // Subimos a Storage reemplazando la foto anterior
-        await supabase.storage
-            .from('FotoUsuarios')
-            .upload(path, file, fileOptions: const FileOptions(upsert: true));
-
-        final baseUrl = supabase.storage.from('FotoUsuarios').getPublicUrl(path);
-        foto.text = baseUrl;
-
-        // 🔥 EL TRUCO: Borramos la imagen anterior de la memoria caché de Flutter
-        await NetworkImage(baseUrl).evict();
-      }
-
-      // 2. Actualizamos la base de datos con los textos y la URL (nueva o vieja)
-      await supabase
-          .from('usuarios')
-          .update({
-            'nombre': nombre.text.trim(),
-            'nick': nick.text.trim(),
-            'edad': edad.text.trim(),
-            'foto': foto.text.trim(),
-          })
-          .eq('auth_id', user.id);
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Datos actualizados correctamente"), backgroundColor: Colors.green),
-        );
-        Navigator.pop(context); 
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error al actualizar: $e"), backgroundColor: Colors.red),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _actualizando = false);
-      }
-    }
-  }
-
-  Future<void> cerrarSesion() async {
-    await supabase.auth.signOut();
-    if (mounted) {
-      Navigator.pushNamedAndRemoveUntil(context, "/", (Route<dynamic> route) => false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +48,6 @@ class _PerfilscreenState extends State<Perfilscreen> {
                   ),
                   const SizedBox(height: 5),
                   
-                  // Botones compactos debajo de la foto
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -285,5 +156,138 @@ class _PerfilscreenState extends State<Perfilscreen> {
               ),
             ),
     );
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    nombre = TextEditingController();
+    nick = TextEditingController();
+    edad = TextEditingController();
+    foto = TextEditingController();
+    cargarDatos();
+  }
+
+  @override
+  void dispose() {
+    nombre.dispose();
+    nick.dispose();
+    edad.dispose();
+    foto.dispose();
+    super.dispose();
+  }
+
+  Future<void> cargarDatos() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) return;
+
+    try {
+      final response = await supabase
+          .from('usuarios')
+          .select()
+          .eq('auth_id', user.id)
+          .single();
+
+      if (mounted) {
+        setState(() {
+          nombre.text = response['nombre'] ?? '';
+          nick.text = response['nick'] ?? '';
+          edad.text = response['edad'] ?? '';
+          foto.text = response['foto'] ?? '';
+          _cargando = false; 
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _cargando = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error al cargar perfil: $e"), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  Future<void> seleccionarImagenGaleria() async {
+    final picker = ImagePicker();
+    final imagen = await picker.pickImage(source: ImageSource.gallery);
+    if (imagen != null) {
+      setState(() => imagenSeleccionada = imagen);
+    }
+  }
+
+  Future<void> tomarFoto() async {
+    final picker = ImagePicker();
+    final imagen = await picker.pickImage(source: ImageSource.camera);
+    if (imagen != null) {
+      setState(() => imagenSeleccionada = imagen);
+    }
+  }
+
+  Future<void> actualizarDatos() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) return;
+
+    setState(() => _actualizando = true);
+
+    try {
+      if (imagenSeleccionada != null) {
+        final file = File(imagenSeleccionada!.path);
+        
+        if (foto.text.isNotEmpty && foto.text.contains('FotoUsuarios/')) {
+          try {
+            final rutaVieja = foto.text.split('FotoUsuarios/').last; 
+            await supabase.storage.from('FotoUsuarios').remove([rutaVieja]);
+          } catch (e) {
+           
+          }
+        }
+
+        final extension = imagenSeleccionada!.path.split('.').last;
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        final path = "fotos/${user.id}_$timestamp.$extension";
+        
+        await supabase.storage
+            .from('FotoUsuarios')
+            .upload(path, file);
+
+        final baseUrl = supabase.storage.from('FotoUsuarios').getPublicUrl(path);
+        foto.text = baseUrl;
+      }
+
+      await supabase
+          .from('usuarios')
+          .update({
+            'nombre': nombre.text.trim(),
+            'nick': nick.text.trim(),
+            'edad': edad.text.trim(),
+            'foto': foto.text.trim(),
+          })
+          .eq('auth_id', user.id);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Datos actualizados correctamente"), backgroundColor: Colors.green),
+        );
+        Navigator.pop(context); 
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error al actualizar: $e"), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _actualizando = false);
+      }
+    }
+  }
+
+  Future<void> cerrarSesion() async {
+    await supabase.auth.signOut();
+    if (mounted) {
+      Navigator.pushNamedAndRemoveUntil(context, "/", (Route<dynamic> route) => false);
+    }
   }
 }

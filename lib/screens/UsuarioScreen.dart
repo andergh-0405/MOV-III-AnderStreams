@@ -5,15 +5,14 @@ import 'package:movies_taller/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Usuarioscreen extends StatefulWidget {
-  final  cambiarTema;
-  const Usuarioscreen(this.cambiarTema,{super.key});
+  final cambiarTema;
+  const Usuarioscreen(this.cambiarTema, {super.key});
 
   @override
   State<Usuarioscreen> createState() => _UsuarioscreenState();
 }
 
 class _UsuarioscreenState extends State<Usuarioscreen> {
-
   final nombreController = TextEditingController();
   final nickController = TextEditingController();
   final edadController = TextEditingController();
@@ -183,7 +182,7 @@ class _UsuarioscreenState extends State<Usuarioscreen> {
     );
   }
 
- Future<void> seleccionarImagenGaleria() async {
+  Future<void> seleccionarImagenGaleria() async {
     final picker = ImagePicker();
     final imagen = await picker.pickImage(source: ImageSource.gallery);
     if (imagen != null) {
@@ -213,17 +212,21 @@ class _UsuarioscreenState extends State<Usuarioscreen> {
     final authUser = supabase.auth.currentUser;
     if (authUser == null) return;
 
-    // 🔥 Subir imagen a Supabase Storage
     final file = File(imagenSeleccionada!.path);
     final path = "fotos/${authUser.id}.png";
     await supabase.storage
         .from('FotoUsuarios')
-        .upload(path, file, fileOptions: const FileOptions(upsert: true));
+        .upload(
+          path,
+          file,
+          fileOptions: const FileOptions(
+            cacheControl: 'no-cache',
+            upsert: true,
+          ),
+        );
 
-    // Obtener URL pública
     fotoUrl = supabase.storage.from('FotoUsuarios').getPublicUrl(path);
 
-    // Guardar datos en tabla usuarios
     await supabase.from('usuarios').insert({
       'auth_id': authUser.id,
       'nombre': nombreController.text,
@@ -234,5 +237,4 @@ class _UsuarioscreenState extends State<Usuarioscreen> {
 
     Navigator.pushNamed(context, "/movies");
   }
-
 }
