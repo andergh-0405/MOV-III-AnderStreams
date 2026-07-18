@@ -7,9 +7,12 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  chewie: ^1.14.1
   flutter:
     sdk: flutter
+  image_picker: ^1.2.3
   supabase_flutter: ^2.15.0
+  video_player: ^2.11.1
   youtube_player_flutter: ^10.0.1
 
 dev_dependencies:

@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:movies_taller/main.dart';
 import 'package:movies_taller/screens/PerfilScreen.dart';
+import 'package:movies_taller/screens/ReproductorYoutube.dart';
 
 class Movies extends StatefulWidget {
   final cambiarTema;
-  const Movies({this.cambiarTema, super.key});
+  const Movies(this.cambiarTema,{super.key});
 
   @override
   State<Movies> createState() => _MoviesState();
@@ -68,7 +69,7 @@ class _MoviesState extends State<Movies> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "ANDERSTREAM",
+          "CineMax",
           style: TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
@@ -223,17 +224,6 @@ class _MoviesState extends State<Movies> {
                                         width: 110,
                                         height: 150,
                                         fit: BoxFit.cover,
-                                        errorBuilder: (_, __, ___) => Container(
-                                          width: 110,
-                                          height: 150,
-                                          color: colorScheme
-                                              .surfaceContainerHighest,
-                                          child: Icon(
-                                            Icons.broken_image,
-                                            color: colorScheme.onSurface
-                                                .withOpacity(0.3),
-                                          ),
-                                        ),
                                         loadingBuilder: (_, child, progress) {
                                           if (progress == null) return child;
                                           return Container(
@@ -342,16 +332,6 @@ class DetallePelicula extends StatelessWidget {
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
-                width: double.infinity,
-                height: 250,
-                color: colorScheme.surfaceContainerHighest,
-                child: Icon(
-                  Icons.movie,
-                  size: 64,
-                  color: colorScheme.onSurface.withOpacity(0.3),
-                ),
-              ),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -412,7 +392,29 @@ class DetallePelicula extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: FilledButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        // 1. Leemos el link desde el JSON
+                        final String? urlTrailer = pelicula['trailer_url'];
+                        
+                        // 2. Verificamos que tenga un enlace válido
+                        if (urlTrailer != null && urlTrailer.isNotEmpty) {
+                          // Navegamos a la nueva pantalla pasándole la URL
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Reproductoryoutube(url: urlTrailer),
+                            ),
+                          );
+                        } else {
+                          // 3. Mostramos un mensaje si el JSON no tiene trailer
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Tráiler no disponible para esta película"), 
+                              backgroundColor: Colors.orange,
+                            ),
+                          );
+                        }
+                      },
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
@@ -501,33 +503,81 @@ Widget fotoUsuario(BuildContext context) {
         .eq('auth_id', supabase.auth.currentUser!.id)
         .maybeSingle(),
     builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return const CircleAvatar(
-          radius: 20,
-          child: Icon(Icons.person),
-        );
-      }
+      // Optimizamos la lectura: si está cargando, fotoUrl queda vacía y muestra el ícono
+      final fotoUrl = snapshot.data?['foto'] ?? '';
 
-      final data = snapshot.data;
-      final fotoUrl = data?['foto'] ?? '';
-
-      return IconButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Perfil"),
-            content: Perfilscreen(),
+      return Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: IconButton(
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // Bordes curvos elegantes
+              ),
+              clipBehavior: Clip.antiAlias, // Corta el fondo para que no desborde las esquinas
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // ==========================================
+                  // 🌟 CABECERA PERSONALIZADA (Reemplaza al AppBar)
+                  // ==========================================
+                  Container(
+                    padding: const EdgeInsets.only(left: 20, right: 10, top: 10, bottom: 10),
+                    // Fondo dinámico: gris oscuro en modo noche, gris claro en día
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.grey[900] 
+                        : Colors.grey[200],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "MI PERFIL",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900, 
+                            fontSize: 16, 
+                            letterSpacing: 1,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close, color: Colors.red),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                  // ==========================================
+                  // 🌟 CUERPO DEL MODAL
+                  // ==========================================
+                  const Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Perfilscreen(), // Tu pantalla ajustada
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ).then((_) {
+            // 🔥 EL TRUCO: Cuando el Dialog se cierra, obligamos a este FutureBuilder a ejecutarse de nuevo.
+            // Si el usuario cambió su foto de perfil, se actualizará en la barra superior al instante.
+            if (context.mounted) {
+              (context as Element).markNeedsBuild();
+            }
+          }),
+          icon: CircleAvatar(
+            radius: 18,
+            backgroundColor: Colors.red,
+            backgroundImage: fotoUrl.isNotEmpty ? NetworkImage(fotoUrl) : null,
+            child: fotoUrl.isEmpty 
+                ? const Icon(Icons.person, color: Colors.white, size: 20) 
+                : null,
           ),
-        ),
-        icon: CircleAvatar(
-          radius: 20,
-          backgroundImage: fotoUrl.isNotEmpty ? NetworkImage(fotoUrl) : null,
-          child: fotoUrl.isEmpty
-              ? const Icon(Icons.person, color: Colors.white)
-              : null,
         ),
       );
     },
   );
 }
+
 

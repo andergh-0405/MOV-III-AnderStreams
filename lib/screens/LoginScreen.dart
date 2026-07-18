@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class Login extends StatelessWidget {
 
   final cambiarTema;
-  const Login({this.cambiarTema ,super.key});
+  const Login(this.cambiarTema,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -145,19 +145,18 @@ Future<void> login(context, correo, contrasenia) async {
     final User? user = res.user;
 
     if (user != null) {
-      // Verificar si ya tiene datos en la tabla usuarios
       final response = await supabase
           .from('usuarios')
           .select()
-          .eq('auth_id', user.id)   // 👈 usamos el UID de Auth
+          .eq('auth_id', user.id)   
           .maybeSingle();
 
       if (response == null) {
-        // No tiene datos → mostrar formulario
         Navigator.pushReplacementNamed(context, "/datosUsuario");
+        (Route<dynamic> route) => false;
       } else {
-        // Ya tiene datos → ir directo a movies
         Navigator.pushReplacementNamed(context, "/movies");
+        (Route<dynamic> route) => false;
       }
     }
   } catch (e) {

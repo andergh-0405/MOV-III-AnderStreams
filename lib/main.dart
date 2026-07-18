@@ -41,10 +41,10 @@ class _MainAppState extends State<MainApp> {
      initialRoute: "/",
      routes: {
       "/": (context) => Welcomescreen(),
-      "/login": (context) =>Login(cambiarTema: cambiarTema),
+      "/login": (context) =>Login(cambiarTema),
       "/register": (context)=> Register(),
-      "/movies": (context)=> Movies(cambiarTema: cambiarTema),
-      "/datosUsuario": (context)=> Usuarioscreen(cambiarTema: cambiarTema),
+      "/movies": (context)=> Movies(cambiarTema),
+      "/datosUsuario": (context)=> Usuarioscreen( cambiarTema),
      },
     );
   }
