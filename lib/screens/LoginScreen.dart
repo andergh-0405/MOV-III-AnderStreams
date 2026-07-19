@@ -161,7 +161,7 @@ Future<void> login(context, correo, contrasenia) async {
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error al iniciar sesión: $e")),
+      SnackBar(content: Text("Correo o contraseña incorrecto")),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_taller/screens/ReproductorPeliculasScreen.dart';
 import 'package:movies_taller/screens/ReproductorYoutube.dart';
 
 class Detallepeliculascreen extends StatelessWidget {
@@ -18,11 +19,9 @@ class Detallepeliculascreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              pelicula['thumbnail_horinzontal'] ?? pelicula['thumbnail'],
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
+            Reproductorpeliculasscreen(
+              videoUrl: pelicula['video_url'] ?? '', 
+              thumbnail: pelicula['thumbnail'] ?? '', 
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),

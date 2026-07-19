@@ -12,6 +12,7 @@ class Perfilscreen extends StatefulWidget {
 }
 
 class _PerfilscreenState extends State<Perfilscreen> {
+
   late TextEditingController nombre;
   late TextEditingController nick;
   late TextEditingController edad;
@@ -35,7 +36,6 @@ class _PerfilscreenState extends State<Perfilscreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min, 
                 children: [
-                  // Lógica visual para la foto: Local > Red > Icono por defecto
                   CircleAvatar(
                     radius: 55,
                     backgroundColor: Colors.red.withOpacity(0.15),
@@ -238,9 +238,7 @@ class _PerfilscreenState extends State<Perfilscreen> {
           try {
             final rutaVieja = foto.text.split('FotoUsuarios/').last; 
             await supabase.storage.from('FotoUsuarios').remove([rutaVieja]);
-          } catch (e) {
-           
-          }
+          } catch (e) {}
         }
 
         final extension = imagenSeleccionada!.path.split('.').last;
@@ -274,7 +272,7 @@ class _PerfilscreenState extends State<Perfilscreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error al actualizar: $e"), backgroundColor: Colors.red),
+          SnackBar(content: Text("Error al actualizar"), backgroundColor: Colors.red),
         );
       }
     } finally {

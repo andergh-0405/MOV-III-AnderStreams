@@ -1,3 +1,3 @@
-# movies_taller
+# CineMax
 
 A new Flutter project.

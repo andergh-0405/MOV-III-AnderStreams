@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:movies_taller/l10n/app_localizations.dart';
 
 class Welcomescreen extends StatelessWidget {
   const Welcomescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -32,9 +35,9 @@ class Welcomescreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () => Navigator.pushNamed(context, "/login"),
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(
+                    child: Text(
+                      l10n.loginButton, 
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -49,9 +52,9 @@ class Welcomescreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () => Navigator.pushNamed(context, "/register"),
-                    child: const Text(
-                      "Registro",
-                      style: TextStyle(
+                    child: Text(
+                      l10n.registerButton, 
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
